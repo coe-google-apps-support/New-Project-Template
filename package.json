@@ -15,5 +15,13 @@
   "bugs": {
     "url": "https://github.com/coe-google-apps-support/New-Project-Template/issues"
   },
-  "homepage": "https://github.com/coe-google-apps-support/New-Project-Template#readme"
+  "homepage": "https://github.com/coe-google-apps-support/New-Project-Template#readme",
+  "devDependencies": {
+    "browserify": "^13.1.0",
+    "gulp": "^3.9.1",
+    "gulp-gjslint": "^0.1.5",
+    "gulp-replace": "^0.5.4",
+    "gulp-util": "^3.0.7",
+    "vinyl-source-stream": "^1.1.0"
+  }
 }

@@ -25,7 +25,7 @@ gulp.task('fix-all', closureFix);
  *
  */
 function browserifyBundle() {
-  return browserify('./src/client/js/client.js')
+  return browserify('./src/client/js/root.js')
     .bundle()
     .on('error', function(e) {
       gutil.log(e);
@@ -46,7 +46,7 @@ function buildGAS() {
   // Resolved an issue where $& in the replacement string would be replaced by the matched string.
   // It required me to use a function instead of a string as the second param.
   gulp.src('./src/client/html/*.html')
-    .pipe(replace(/<script src="\w*.js">\s*<\/script>/g, function(match, p1, p2, p3, offset, string) {
+    .pipe(replace(/<script src=".\/bundle.js">\s*<\/script>/g, function(match, p1, p2, p3, offset, string) {
       return '<script type="text/javascript">\n' + jsFile + '\n</script>';
     }))
     .pipe(gulp.dest('./build/gas'));
@@ -109,7 +109,7 @@ function openGAS(cb) {
  *
  */
 function openWeb(cb) {
-  var chrome = 'start chrome ./build/web/ListSetupSidebar.html';
+  var chrome = 'start chrome ./build/web/index.html';
   exec(chrome, function(err, stdout, stderr) {
     console.log(stdout);
     console.log(stderr);
