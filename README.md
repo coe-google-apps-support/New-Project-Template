@@ -2,23 +2,21 @@
 This is our template for creating a new project.
 
 
-Setting Up Our Development Environment
+# Setting Up Our Development Environment
 
-[[TOC]]
-
-# Create a Github Account
+## Create a Github Account
 
 GitHub is a web-based Git repository hosting service. It offers all of the distributed version control and source code management (SCM) functionality of Git as well as adding its own features. If you are new to Git, there is a [self-paced introductory course](https://github.github.com/on-demand/intro-to-github/) available for free from GitHub.
 
 [Create an account](https://github.com/join) or ask someone on the [Google Apps Support Dev Team](https://github.com/orgs/coe-google-apps-support/people) to add your existing account to the [organization](https://github.com/coe-google-apps-support).
 
-# Download Github for Desktop
+## Download Github for Desktop
 
 This [desktop application](https://desktop.github.com/) is a GUI repository manager that comes packaged with Git Shell.  If you’re coming from Unix, you may want to install [Git Bash](https://git-scm.com/download/win) as well.  Git Bash provides a virtual Bash shell for you to use the familiar Unix commands and many Unix utilities.
 
 Once you authenticate this application with GitHub username/password, a new SSH key for that specific computer will be generated and automatically added to your GitHub account.
 
-# Install Node
+## Install Node
 
 [Node](https://nodejs.org/en/) is used primarily for its package manager, Node Package Manager (NPM). NPM will allow us to install many other packages with ease. Install the LTS version. Ensure that the binary is on the system path (i.e. $PATH) by running the following command at a command prompt:
 
@@ -56,11 +54,11 @@ Using [gapps](https://www.npmjs.com/package/node-google-apps-script), you can de
 
 There is some additional authentication required with the setup of gapps, [see the docs](https://www.npmjs.com/package/node-google-apps-script#1-get-google-drive-credentials) for info.
 
-# Setup Atom Text Editor
+## Setup Atom Text Editor
 
 [Atom](https://atom.io/) is a powerful and customizable text editor that allows you to build your code, and many more features can be added by installing atom packages. 
 
-## Recommended Atom packages
+### Recommended Atom packages
 
 - [Atom Minimap](https://atom.io/packages/minimap) - Provides a visual overview of your source.
 - [Atom Beautify](https://atom.io/packages/atom-beautify) - Beautify, unpack or deobfuscate JavaScript, HTML, CSS, and many other llanguages. When used with common settings among a team, this package helps to maintain a consistent appearance of code.
@@ -76,7 +74,7 @@ maximumLineLength: 120
 }
 ````
 
-# Install Closure Linter
+## Install Closure Linter
 
 [The Closure Linter](https://developers.google.com/closure/utilities/) is a CLI-based utility built by Google that checks JavaScript files for style issues such as operator placement, missing semicolons, spacing, the presence of JsDoc annotations, and more.
 
