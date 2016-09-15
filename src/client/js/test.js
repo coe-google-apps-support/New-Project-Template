@@ -11,3 +11,5 @@ var Test = function () {
     alert(value);
   }
 }
+
+module.exports = Test;
