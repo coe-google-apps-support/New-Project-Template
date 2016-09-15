@@ -1,0 +1,19 @@
+{
+  "name": "new-project-template",
+  "version": "1.0.0",
+  "description": "This is the basic development workflow.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coe-google-apps-support/New-Project-Template.git"
+  },
+  "author": "jared rewerts",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/coe-google-apps-support/New-Project-Template/issues"
+  },
+  "homepage": "https://github.com/coe-google-apps-support/New-Project-Template#readme"
+}
