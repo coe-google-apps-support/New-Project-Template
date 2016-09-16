@@ -42,12 +42,16 @@ function browserifyBundle() {
 function buildGAS() {
   // HTML
   var jsFile = fs.readFileSync('./build/bundle.js', 'utf8');
+  var cssFile = fs.readFileSync('./src/client/css/styles.css', 'utf8');
 
   // Resolved an issue where $& in the replacement string would be replaced by the matched string.
   // It required me to use a function instead of a string as the second param.
-  gulp.src('./src/client/html/*.html')
-    .pipe(replace(/<script src=".\/bundle.js">\s*<\/script>/g, function(match, p1, p2, p3, offset, string) {
+  gulp.src('./src/client/html/index.html')
+    .pipe(replace('<script src="../js/bundle.js"></script>', function(match, p1, p2, p3, offset, string) {
       return '<script type="text/javascript">\n' + jsFile + '\n</script>';
+    }))
+    .pipe(replace('<link rel="stylesheet" href="../css/styles.css">', function(match, p1, p2, p3, offset, string) {
+      return '<style>\n' + cssFile + '\n</style>';
     }))
     .pipe(gulp.dest('./build/gas'));
 
@@ -62,15 +66,10 @@ function buildGAS() {
  */
 function buildWeb() {
   gulp.src('./build/bundle.js')
-    .pipe(gulp.dest('./build/web'));
+    .pipe(gulp.dest('./build/web/client/js'));
 
-  // HTML
-  gulp.src('./src/client/html/*.html')
+  gulp.src(['!./src/client/js/*', './src/**'])
     .pipe(gulp.dest('./build/web'));
-
-  // GAS
-  gulp.src('./src/GAS/*')
-    .pipe(gulp.dest('./build/web/GAS'));
 }
 
 /**
@@ -109,7 +108,7 @@ function openGAS(cb) {
  *
  */
 function openWeb(cb) {
-  var chrome = 'start chrome ./build/web/index.html';
+  var chrome = 'start chrome ./build/web/client/html/index.html';
   exec(chrome, function(err, stdout, stderr) {
     console.log(stdout);
     console.log(stderr);
