@@ -26,7 +26,7 @@ If the output is not a version number, you may need to [add Node to your PATH](h
 
 ## Node Packages
 
-Node packages can be installed globally or locally.  The globally required packages for our environment are as follows.
+Node packages can be installed globally or locally. If you've already installed these before, you won't need to install them again. The globally required packages for our environment are as follows.
 
 ### Gulp
 
@@ -84,4 +84,18 @@ To install Closure Linter on Windows:
 2. Execute the following command:
 
 `$ pip install https://github.com/google/closure-linter/zipball/master`
+
+# Creating a New Project
+
+## Clone this project
+
+Run the following in Git Shell:
+
+`$ git clone https://github.com/coe-google-apps-support/New-Project-Template`
+
+This will pull this repository down onto your local machine.
+
+Now we need to change where the project is pointing. Assuming you already have a project created in GitHub, run:
+
+`$ git remote set-url origin YOUR-PROJECT-URL`
 
