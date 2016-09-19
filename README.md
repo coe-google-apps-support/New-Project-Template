@@ -87,15 +87,26 @@ To install Closure Linter on Windows:
 
 # Creating a New Project
 
-## Clone this project
+### Clone this project
 
 Run the following in Git Shell:
 
 `$ git clone https://github.com/coe-google-apps-support/New-Project-Template`
 
-This will pull this repository down onto your local machine.
+This will pull this repository down onto your local machine. 
 
-Now we need to change where the project is pointing. Assuming you already have a project created in GitHub, run:
+### Update your new project
+
+Now we need to change where the project is pointing. Run the following command, replacing YOUR-PROJECT-URL with your new projects URL (NOT https://github.com/coe-google-apps-support/New-Project-Template)
 
 `$ git remote set-url origin YOUR-PROJECT-URL`
 
+Now we have all the files in New-Project-Template pointing at your new projects repo.
+
+### Force push
+
+Our last act is to push all of the New-Project-Template files into the new projects file structure. Before we proceed, it's worth noting that this could potentially overwrite files in your new project. This is why we do this process at the very start of the project. If you don't have any files you are worried about, run the following:
+
+`$ git push --force`
+
+Now we have the new project initialized with all the files in New-Project-Template.
