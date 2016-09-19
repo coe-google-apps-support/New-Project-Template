@@ -20,7 +20,7 @@
     "browserify": "^13.1.0",
     "gulp": "^3.9.1",
     "gulp-gjslint": "^0.1.5",
-    "gulp-replace": "^0.5.4",
+    "gulp-htmlprocessor": "^0.1.1",
     "gulp-util": "^3.0.7",
     "jquery": "^3.1.0",
     "vinyl-source-stream": "^1.1.0"
