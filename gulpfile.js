@@ -4,6 +4,7 @@ var gulp = require('gulp');
 var gutil = require('gulp-util');
 var source = require('vinyl-source-stream');
 var htmlProcessor = require('gulp-htmlprocessor');
+var sass = require('gulp-sass');
 
 var exec = require('child_process').exec;
 var fs = require('fs');
@@ -153,22 +154,4 @@ function closureFix(cb) {
     console.log(stderr);
     cb(err);
   });
-}
-
-// ****** Utility Functions ****** //
-
-/**
- * This function attempts to validate whether a path is to a local file or not.
- *
- * @param {string} filePath The path to be tested
- * @return {boolean} true for local, false for invalid or for web reference
- */
-function isLocal(filePath) {
-
-  try {
-    fs.accessSync(filePath);
-    return true;
-  } catch (e) {
-    return false;
-  }
 }
