@@ -1,0 +1,58 @@
+@import 'colors';
+@import 'google-material-icons';
+
+// ----- mixins
+
+@mixin build-color ($fore, $back, $type) {
+  background-color: $fore;
+
+  i {
+    background-color: $back;
+  }
+
+  i:before {
+    content: $type;
+  }
+}
+
+@mixin build-snackbar ($size: 24px, $max-width: 568px) {
+  display: inline;
+
+  i {
+    margin: $size * (1/3);
+    padding: $size * (1/6);
+    font-size: $size;
+    border-radius: 1000px;
+    float: left;
+  }
+
+  div {
+    max-width: $max-width - $size;
+    font-size: $size / 2;
+  }
+}
+
+.custom-snackbar-small-success {
+  @include build-color($success-green, $success-green-back, 'done');
+  @include build-snackbar(24px);
+}
+
+.custom-snackbar-success {
+  @include build-color($success-green, $success-green-back, 'done');
+  @include build-snackbar(36px);
+}
+
+.custom-snackbar-small-info {
+  @include build-color($info-blue, $info-blue-back, 'info_outline');
+  @include build-snackbar(24px);
+}
+
+.custom-snackbar-small-warning {
+  @include build-color($warn-yellow, $warn-yellow-back, 'warning');
+  @include build-snackbar(24px);
+}
+
+.custom-snackbar-small-error {
+  @include build-color($error-red, $error-red-back, 'not_interested');
+  @include build-snackbar(24px);
+}

@@ -38,6 +38,12 @@
     <link rel="stylesheet" href="../css/styles.css">
     <!-- /build -->
 
+    <!-- build:css inline build/common/css/alert.css -->
+    <link rel="stylesheet" href="../css/alert.css">
+    <!-- /build -->
+
+
+
     <style>
     #view-source {
       position: fixed;
@@ -48,6 +54,7 @@
       margin-bottom: 40px;
       z-index: 900;
     }
+
     </style>
   </head>
   <body>
@@ -234,10 +241,16 @@
           </g>
         </defs>
       </svg>
-      <a href="https://github.com/google/material-design-lite/blob/mdl-1.x/templates/dashboard/" target="_blank" id="view-source" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored mdl-color-text--white">View Source</a>
+      <button target="_blank" id="view-source" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored mdl-color-text--white">View Message</Button>
+
+      <!-- <div id="alert-bar" class="custom-snackbar-small-error mdl-js-snackbar mdl-snackbar" >
+        <i class="material-icons md-light"></i>
+        <div class="mdl-snackbar__text"></div>
+        <button class="mdl-snackbar__action" type="button"></button>
+      </div> -->
 
       <script src="https://code.getmdl.io/1.2.1/material.min.js"></script>
-    <!-- build:js inline build/bundle.js -->
+    <!-- build:js inline build/common/bundle.js -->
     <script src="../js/bundle.js"></script>
     <!-- /build -->
   </body>
