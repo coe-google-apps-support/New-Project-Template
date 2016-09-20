@@ -17,27 +17,28 @@ gulp.task('test-web', ['build-web'], openWeb);
 gulp.task('lint-all', closureLint);
 gulp.task('fix-all', closureFix);
 gulp.task('browserify', browserifyBundle);
+gulp.task('compile-sass', compileSASS);
 
 // Web specific
-gulp.task('build-web', ['browserify'], buildWeb);
+gulp.task('build-web', ['browserify', 'compile-sass'], buildWeb);
 
 // GAS specific
 gulp.task('deploy-gas', ['swap-tags'], deployGAS);
 gulp.task('swap-tags', ['build-gas'], replaceTags);
-gulp.task('build-gas', ['browserify'], buildGAS);
+gulp.task('build-gas', ['browserify', 'compile-sass'], buildGAS);
 
 /**
  * Bundles up client.js (and all required functionality) and places it in a build directory.
  *
  */
 function browserifyBundle() {
-  return browserify('./src/client/js/root.js')
-    .bundle()
-    .on('error', function(e) {
-      gutil.log(e);
-    })
-    .pipe(source('bundle.js'))
-    .pipe(gulp.dest('./build'));
+    return browserify('./src/client/js/root.js')
+        .bundle()
+        .on('error', function(e) {
+            gutil.log(e);
+        })
+        .pipe(source('bundle.js'))
+        .pipe(gulp.dest('./build/common'));
 }
 
 /**
@@ -46,14 +47,14 @@ function browserifyBundle() {
  */
 function buildGAS() {
 
-  gulp.src('./src/client/html/**', {
-    base: './src/client'
-  })
-  .pipe(gulp.dest('./build/gas'));
+    gulp.src('./src/client/html/**', {
+            base: './src/client'
+        })
+        .pipe(gulp.dest('./build/gas'));
 
-  // GAS
-  return gulp.src('./src/GAS/*')
-    .pipe(gulp.dest('./build/gas/GAS'));
+    // GAS
+    return gulp.src('./src/GAS/*')
+        .pipe(gulp.dest('./build/gas/GAS'));
 }
 
 /**
@@ -62,11 +63,11 @@ function buildGAS() {
  * All swap tags are relative to this gulpfile.
  */
 function replaceTags() {
-  return gulp.src('./build/gas/html/*.html')
-  .pipe(htmlProcessor({
-    includeBase: './'
-  }))
-  .pipe(gulp.dest('./build/gas/html/'));
+    return gulp.src('./build/gas/html/*.html')
+        .pipe(htmlProcessor({
+            includeBase: './'
+        }))
+        .pipe(gulp.dest('./build/gas/html/'));
 }
 
 /**
@@ -74,11 +75,23 @@ function replaceTags() {
  *
  */
 function buildWeb() {
-  gulp.src('./build/bundle.js')
-    .pipe(gulp.dest('./build/web/client/js'));
+    gulp.src('./build/common/bundle.js')
+        .pipe(gulp.dest('./build/web/client/js'));
 
-  return gulp.src(['!./src/client/js/*', './src/**'])
-    .pipe(gulp.dest('./build/web'));
+    gulp.src('./src/client/css/*')
+        .pipe(gulp.dest('./build/web/client/css'));
+
+    gulp.src('./src/client/html/*')
+        .pipe(gulp.dest('./build/web/client/html'));
+
+    gulp.src('./src/client/images/*')
+        .pipe(gulp.dest('./build/web/client/images'));
+
+    gulp.src('./build/common/css/*')
+        .pipe(gulp.dest('./build/web/client/css'));
+
+    return gulp.src('./src/GAS/*')
+        .pipe(gulp.dest('./build/web/GAS'));
 }
 
 /**
@@ -87,11 +100,11 @@ function buildWeb() {
  *
  */
 function deployGAS(cb) {
-  return exec('gapps push', function(err, stdout, stderr) {
-    console.log(stdout);
-    console.log(stderr);
-    cb(err);
-  });
+    return exec('gapps push', function(err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
 }
 
 /**
@@ -100,15 +113,15 @@ function deployGAS(cb) {
  *
  */
 function openGAS(cb) {
-  // Open the project in chrome
-  var key = JSON.parse(fs.readFileSync('gapps.config.json', 'utf8')).fileId;
+    // Open the project in chrome
+    var key = JSON.parse(fs.readFileSync('gapps.config.json', 'utf8')).fileId;
 
-  var chrome = 'start chrome https://script.google.com/a/edmonton.ca/d/' + key + '/edit';
-  return exec(chrome, function(err, stdout, stderr) {
-    console.log(stdout);
-    console.log(stderr);
-    cb(err);
-  });
+    var chrome = 'start chrome https://script.google.com/a/edmonton.ca/d/' + key + '/edit';
+    return exec(chrome, function(err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
 }
 
 /**
@@ -117,12 +130,12 @@ function openGAS(cb) {
  *
  */
 function openWeb(cb) {
-  var chrome = 'start chrome ./build/web/client/html/index.html';
-  return exec(chrome, function(err, stdout, stderr) {
-    console.log(stdout);
-    console.log(stderr);
-    cb(err);
-  });
+    var chrome = 'start chrome ./build/web/client/html/index.html';
+    return exec(chrome, function(err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
 }
 
 /**
@@ -130,15 +143,15 @@ function openWeb(cb) {
  *
  */
 function closureLint() {
-  // flags: https://github.com/jmendiara/node-closure-linter-wrapper#flags
-  var lintOptions = {
-    flags: ['--max_line_length 120', '--strict']
-  };
+    // flags: https://github.com/jmendiara/node-closure-linter-wrapper#flags
+    var lintOptions = {
+        flags: ['--max_line_length 120', '--strict']
+    };
 
-  // Output all failures to the console, and \then fail.
-  return gulp.src(['./src/**/*.js'])
-    .pipe(gjslint(lintOptions))
-    .pipe(gjslint.reporter('console'));
+    // Output all failures to the console, and \then fail.
+    return gulp.src(['./src/**/*.js'])
+        .pipe(gjslint(lintOptions))
+        .pipe(gjslint.reporter('console'));
 }
 
 /**
@@ -147,11 +160,21 @@ function closureLint() {
  */
 function closureFix(cb) {
 
-  var fixJS = 'fixjsstyle --strict --max_line_length 120 -r ./src';
+    var fixJS = 'fixjsstyle --strict --max_line_length 120 -r ./src';
 
-  return exec(fixJS, function(err, stdout, stderr) {
-    console.log(stdout);
-    console.log(stderr);
-    cb(err);
-  });
+    return exec(fixJS, function(err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
+}
+
+function compileSASS() {
+    return gulp.src('./src/client/sass/*.scss')
+        .pipe(sass().on('error', function(error) {
+            var message = new gutil.PluginError('sass', error.messageFormatted).toString();
+            process.stderr.write(message + '\n');
+            process.exit(1);
+        }))
+        .pipe(gulp.dest('./build/common/css'));
 }
